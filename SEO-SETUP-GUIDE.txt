@@ -1,0 +1,21 @@
+ROSE PORTFOLIO V20 — FREE SEO DEPLOYMENT & GOOGLE SEARCH CONSOLE
+
+Intended canonical website: https://roseestrada.vercel.app/
+
+1. Deploy this entire rose-portfolio folder to Vercel. Ensure index.html, script.js, styles.css, assets/, robots.txt, sitemap.xml and vercel.json are in the deployment root.
+2. In Vercel project Settings > Domains, add roseestrada.com and roseestrada.vercel.app. Configure DNS at your domain registrar exactly as Vercel instructs. The supplied vercel.json redirects apex to www; confirm the domain setup and HTTPS work after deployment.
+3. Visit https://roseestrada.vercel.app/ and verify images, project popups, dark mode and CV download. Check https://roseestrada.vercel.app/robots.txt and https://roseestrada.vercel.app/sitemap.xml.
+4. Visit https://search.google.com/search-console and Add Property. Prefer Domain property roseestrada.com, and verify ownership with the DNS TXT record provided by Google. DNS verification is completed at your domain registrar, not in HTML. Alternatively choose URL prefix https://roseestrada.vercel.app/ and use a supported verification method.
+5. Under Sitemaps, submit sitemap.xml (or https://roseestrada.vercel.app/sitemap.xml).
+6. In URL Inspection, enter https://roseestrada.vercel.app/ then choose Test Live URL and Request Indexing if eligible. This requests crawling, not guaranteed indexing.
+7. After several days/weeks, review Pages/Indexing and Performance in Search Console. Search for site:roseestrada.com and Rose Estrada graphic designer to check progress.
+8. Add the published website to your LinkedIn and professional profiles, resume and relevant social profiles to help visitors discover it.
+9. If your preferred domain changes, update canonical, Open Graph URL, structured data, robots.txt, sitemap.xml and redirect settings consistently.
+
+NOTES: SEO does not guarantee ranking or indexing. The portfolio is a JavaScript-driven single-page site: project galleries are interactive rather than separate indexable pages. For deeper project-specific SEO, consider dedicated public project pages in the future. The website and chatbot have not been deployed or connected to Google Search Console by this ZIP. Gemini chatbot needs its existing server-side API setup.
+
+VERCEL.APP DEPLOYMENT UPDATE (V21)
+Your permanent site is https://roseestrada.vercel.app/ . No paid custom domain or DNS setup is required.
+After deployment, open Google Search Console, add a URL-prefix property for https://roseestrada.vercel.app/ and verify ownership using an HTML file or meta tag.
+Submit sitemap https://roseestrada.vercel.app/sitemap.xml and request indexing for https://roseestrada.vercel.app/ .
+Ensure the deployed production domain is roseestrada.vercel.app and the website is publicly accessible (not password protected).

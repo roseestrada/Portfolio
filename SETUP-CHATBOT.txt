@@ -1,0 +1,11 @@
+GEMINI CHATBOT SETUP
+
+1. Deploy the entire rose-portfolio folder to Vercel as a project.
+2. In Vercel > Project Settings > Environment Variables, create GEMINI_API_KEY with your key from Google AI Studio.
+3. Redeploy. The floating message icon will now use /api/chat.
+4. Do NOT put your API key in index.html or script.js.
+5. Opening index.html locally shows the chat UI, but the chatbot needs the deployed API route to answer.
+6. Before public launch, add platform rate limiting / abuse controls and monitor Gemini usage.
+7. Replace placeholder contact email in index.html.
+
+Toolkit logos load from Simple Icons CDN. Adobe Dimension may use a text fallback if no icon is available.

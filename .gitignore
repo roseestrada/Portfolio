@@ -1,0 +1,5 @@
+.git-backup/
+.git-old-backup/
+node_modules/
+.vercel/
+.DS_Store

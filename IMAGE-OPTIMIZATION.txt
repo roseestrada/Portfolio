@@ -1,0 +1,1 @@
+Images optimized to WebP at quality 84 for smaller GitHub uploads. All references updated in HTML, CSS, JavaScript and SEO files. Keep the assets folder intact.
