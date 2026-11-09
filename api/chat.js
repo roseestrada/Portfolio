@@ -1,60 +1,65 @@
 
-// Vercel serverless endpoint for Rose Estrada's Gemini chatbot.
-// Set GEMINI_API_KEY in Vercel Environment Variables (Production).
-
 const SYSTEM = `
-You are the helpful, professional AI assistant on Rose Estrada's design portfolio.
+You are Rose's Assistant, the friendly and professional AI assistant
+on Rose Estrada's creative design portfolio.
 
-Rose is a Philippines-based creative designer who blends creativity,
-technology, and strategy.
+ABOUT ROSE:
+Rose Estrada is a Philippines-based Graphic Designer and Creative Designer
+who blends creativity, technology, and strategy.
 
-Her work includes:
+DESIGN SERVICES:
+- Graphic Design
+- Branding and Visual Identity
+- Social Media Design
+- Digital Advertising
+- Packaging Design
+- Apparel and T-shirt Design
+- UI/UX Design
+- Website Design
+- Motion Graphics
+- Marketing Collateral
+
+PORTFOLIO PROJECTS:
 - Zagu promotional campaigns and merchandise
-- Kalo Gold and Concepcion Iloilo apparel designs
-- Branding and identity design
-- Social media and advertising
-- Packaging design
-- Motion graphics
-- UI/UX design
+- Sora Sips branding and UI/UX
+- Horizon travel agency branding
+- PixelCore design agency branding
+- Kalo Gold apparel designs
+- Concepcion Iloilo apparel designs
+- E-commerce and mobile UI/UX concepts
 
-Her creative tools include:
+CREATIVE TOOLS:
 Adobe Photoshop, Adobe Illustrator, Adobe Dimension,
 Canva, Figma, Framer, and WordPress.
 
-Answer questions about her portfolio and design services
-concisely, professionally, and warmly.
-
-Do not invent prices, availability, years of experience,
-clients, personal details, or contact addresses.
-
-For project inquiries, direct visitors to the Contact
-section of the website.
-
-You are an AI assistant, not Rose herself.
+RULES:
+- Answer professionally, warmly, and concisely.
+- You are an AI assistant, not Rose herself.
+- Help visitors understand Rose's projects and services.
+- Do not invent prices, availability, clients, or experience.
+- For inquiries, direct visitors to the Contact section.
+- Keep responses clear and easy to understand.
 `;
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
-  // Only allow POST requests.
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
     });
   }
 
-  // Check Gemini API key configuration.
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    console.error("GEMINI_API_KEY is missing.");
+    console.error("GEMINI_API_KEY is missing");
 
     return res.status(503).json({
       error: "Chat is not configured yet"
     });
   }
 
-  // Validate conversation messages.
   const messages = req.body?.messages;
 
   if (
@@ -63,7 +68,6 @@ export default async function handler(req, res) {
     messages.length > 12 ||
     messages.some(
       (m) =>
-        !m ||
         !["user", "model"].includes(m.role) ||
         typeof m.text !== "string" ||
         m.text.length > 600
@@ -80,9 +84,8 @@ export default async function handler(req, res) {
       parts: [{ text: m.text }]
     }));
 
-    // Send request to Google Gemini.
     const upstream = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
       {
         method: "POST",
         headers: {
@@ -95,33 +98,22 @@ export default async function handler(req, res) {
           },
           contents,
           generationConfig: {
-            maxOutputTokens: 350,
+            maxOutputTokens: 500,
             temperature: 0.5
           }
         })
       }
     );
 
-    // Log the actual Gemini API error for debugging.
     if (!upstream.ok) {
       const details = await upstream.text();
 
-      let errorMessage = "Unknown Gemini API error";
+      console.error(
+        "Gemini API error:",
+        upstream.status,
+        details
+      );
 
-      try {
-        const errorData = JSON.parse(details);
-        errorMessage =
-          errorData.error?.message || errorMessage;
-      } catch {
-        errorMessage = details.slice(0, 500);
-      }
-
-      console.error("Gemini API error:", {
-        status: upstream.status,
-        message: errorMessage
-      });
-
-      // Keep internal error details hidden from visitors.
       return res.status(502).json({
         error: "Assistant temporarily unavailable"
       });
@@ -136,26 +128,14 @@ export default async function handler(req, res) {
       .join("")
       .trim();
 
-    if (!reply) {
-      console.error("Gemini returned an empty response.", {
-        finishReason: data.candidates?.[0]?.finishReason,
-        blockReason: data.promptFeedback?.blockReason
-      });
-
-      return res.status(502).json({
-        error: "Assistant could not generate a response"
-      });
-    }
-
     return res.status(200).json({
-      reply
+      reply:
+        reply ||
+        "Sorry, I couldn't generate a response. Please try again."
     });
 
   } catch (error) {
-    console.error("Gemini chatbot server error:", {
-      name: error?.name,
-      message: error?.message
-    });
+    console.error("Chat server error:", error.message);
 
     return res.status(502).json({
       error: "Assistant temporarily unavailable"
