@@ -27,7 +27,7 @@ function makeImage(src,alt='',lazy=true){const img=document.createElement('img')
 function renderProjects(category='Branding & Identity'){
  grid.replaceChildren();filters.querySelectorAll('button').forEach(b=>{const active=b.dataset.category===category;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  const items=projects.filter(p=>p.category.includes(category));empty.hidden=items.length!==0;
- items.forEach((p,i)=>{const card=document.createElement('article');card.className='project-card reveal visible';card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Open '+p.title);const art=document.createElement('div');art.className='project-art';art.append(makeImage(p.cover,p.title));const meta=document.createElement('div');meta.className='project-meta';const left=document.createElement('div');const h=document.createElement('h3');h.textContent=p.title;const d=document.createElement('p');d.textContent=p.category.join(' / ');left.append(h,d);const arrow=document.createElement('span');arrow.textContent='↗';meta.append(left,arrow);card.append(art,meta);card.addEventListener('click',()=>openProject(p));card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(p)}});grid.append(card)})
+ items.forEach((p,i)=>{const card=document.createElement('article');card.className='project-card reveal visible';card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Open '+p.title);const art=document.createElement('div');art.className='project-art';art.append(makeImage(p.cover,p.title));const meta=document.createElement('div');meta.className='project-meta';const left=document.createElement('div');const h=document.createElement('h3');h.textContent=p.title;const d=document.createElement('p');d.textContent=p.category.join(' / ');left.append(h,d);const arrow=document.createElement('span');arrow.className='project-open-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent='→';meta.append(left,arrow);art.append(meta);card.append(art);card.style.setProperty('--card-delay',`${Math.min(i,8)*75}ms`);card.addEventListener('click',()=>openProject(p));card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(p)}});grid.append(card)})
 }
 categories.forEach(c=>{const b=document.createElement('button');b.className='filter';b.textContent=c;b.dataset.category=c;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>renderProjects(c));filters.append(b)});renderProjects();
 const dialog=$('#projectDialog');
@@ -65,8 +65,8 @@ carousel.addEventListener('mouseenter',()=>paused=true);carousel.addEventListene
 carousel.addEventListener('focusin',()=>paused=true);carousel.addEventListener('focusout',()=>paused=false);
 carousel.addEventListener('scroll',()=>{if(paused)position=carousel.scrollLeft%Math.max(1,cycleWidth())},{passive:true});
 function stepTools(dir){paused=true;position=(position+dir*220+cycleWidth())%cycleWidth();carousel.scrollTo({left:position,behavior:reduced?'instant':'smooth'});}
-$('#toolsPrev').addEventListener('click',()=>stepTools(-1));$('#toolsNext').addEventListener('click',()=>stepTools(1));
-requestAnimationFrame(animateTools);
+
+carousel.scrollLeft=0;position=0;requestAnimationFrame(animateTools);
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.1});$$('.reveal').forEach(el=>observer.observe(el));$('#year').textContent=new Date().getFullYear();
 
 // Gemini-powered portfolio assistant (API key remains on the server).
@@ -94,3 +94,28 @@ chatForm.addEventListener('submit',async e=>{
  }catch(err){pending.textContent='Chat is unavailable right now. Please use the Contact section to get in touch.';console.warn('Chat:',err.message)}
  finally{chatSubmit.disabled=false;chatInput.disabled=false;chatInput.focus()}
 });
+
+
+// Approved redesign: scroll-aware navigation, gallery entry and footer reveals.
+(()=>{
+ const header=document.querySelector('.header');
+ const links=[...document.querySelectorAll('.nav-links a')];
+ const onScroll=()=>header?.classList.toggle('is-scrolled',scrollY>45);
+ addEventListener('scroll',onScroll,{passive:true});onScroll();
+ const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+ if('IntersectionObserver' in window){
+  const navObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+   if(!entry.isIntersecting)return;
+   links.forEach(link=>{const active=link.getAttribute('href')==='#'+entry.target.id;link.classList.toggle('is-active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')});
+  }),{rootMargin:'-25% 0px -55% 0px',threshold:0});
+  sections.forEach(s=>navObserver.observe(s));
+ }
+ const gallery=document.querySelector('#projectGrid');
+ const animateCards=()=>gallery?.querySelectorAll('.project-card').forEach((card,index)=>{
+  card.style.setProperty('--card-delay',`${Math.min(index,8)*75}ms`);
+  card.style.opacity='0';card.style.transform='translateY(18px)';requestAnimationFrame(()=>{card.style.transition='opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1)';card.style.opacity='1';card.style.transform='translateY(0)'});
+ });
+ if(gallery){new MutationObserver(animateCards).observe(gallery,{childList:true});animateCards()}
+ const footer=document.querySelector('.footer');
+ if(footer){if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))footer.classList.add('footer-visible');else{const obs=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){footer.classList.add('footer-visible');obs.unobserve(footer)}}),{threshold:.15});obs.observe(footer)}}
+})();

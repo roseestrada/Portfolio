@@ -22,12 +22,7 @@
 
     <link href="styles.css" rel="stylesheet" />
     <script defer src="script.js"></script>
-
     <!-- Primary SEO -->
-    <meta
-      name="description"
-      content="Rose Estrada - a Graphic Designer based in the Philippines, blending creativity, marketing, and technology to create impactful visuals and meaningful brand experiences."
-    />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Rose Marie Estrada" />
     <meta name="theme-color" content="#ffffff" />
@@ -115,34 +110,14 @@
     <div aria-hidden="true" class="grain"></div>
     <header class="header">
       <nav aria-label="Main navigation" class="shell nav">
-        <a
-          aria-label="Rose Creative Designer — Home"
-          class="logo brand-image"
-          href="#home"
-          ><img
-            alt="Rose Estrada — Graphic Designer and Creative Designer portfolio logo"
-            class="brand-light"
-            src="assets/rose-logo-light.webp" /><img
-            alt=""
-            aria-hidden="true"
-            class="brand-dark"
-            src="assets/rose-logo-dark.webp"
-        /></a>
+        <a aria-label="Rose Estrada — Home" class="logo wordmark" href="#home">ROSE</a>
         <div class="nav-links" id="navLinks">
           <a href="#work">Work</a><a href="#about">About</a
           ><a href="#services">Services</a><a href="#tools">Tools</a
           ><a href="#contact">Contact</a>
         </div>
         <div class="nav-actions">
-          <button
-            aria-label="Switch to dark mode"
-            aria-pressed="false"
-            class="theme-toggle"
-            id="themeToggle"
-          >
-            <span class="sun">☀</span><span class="moon">☾</span
-            ><span class="knob"></span></button
-          ><button
+          <button aria-label="Switch to dark mode" aria-pressed="false" class="theme-toggle" id="themeToggle" type="button"><span class="sun" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></span><span class="moon" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20.8 14.4A9 9 0 0 1 9.6 3.2 9 9 0 1 0 20.8 14.4Z"/></svg></span><span class="knob" aria-hidden="true"></span></button><button
             aria-controls="navLinks"
             aria-expanded="false"
             aria-label="Open menu"
@@ -192,7 +167,7 @@
       <section class="section shell" id="work">
         <div class="section-top reveal">
           <div>
-            <p class="eyebrow">01 / CURATED PORTFOLIO</p>
+            <p class="eyebrow">03 / SELECTED WORK</p>
             <h2>Selected <em>Work.</em></h2>
           </div>
           <p>
@@ -219,118 +194,113 @@
           </p></noscript
         >
       </section>
-      <section class="section about-band" id="about">
-        <div class="shell about-grid">
-          <div class="reveal">
+      <!-- ABOUT ME — portrait-led creative designer layout -->
+      <section class="section about-band rose-about" id="about">
+        <div class="shell rose-about-layout">
+          <div class="rose-about-copy reveal">
             <p class="eyebrow">02 / A LITTLE ABOUT ME</p>
             <h2>Curious by nature.<br /><em>Creative by design.</em></h2>
+            <p class="rose-about-description">I'm a multidisciplinary creative designer based in the Philippines, creating bold visuals and thoughtful experiences at the intersection of design, marketing, and technology.</p>
+            <p class="rose-about-description rose-about-description-secondary">From brand storytelling and social campaigns to apparel graphics and digital interfaces, I believe great design should look compelling and communicate clearly.</p>
+            <a aria-label="Download Rose Estrada CV as PDF" class="btn primary cv-download-btn rose-about-cv" download="Rose-Estrada-CV.pdf" href="assets/Rose-Estrada-CV.pdf" type="application/pdf"><span>Download CV</span><span aria-hidden="true">↓</span></a>
+            <div class="rose-about-stats" aria-label="Career highlights">
+              <div class="rose-about-stat"><span class="rose-about-stat-icon" aria-hidden="true">✦</span><strong>2</strong><span>Years of<br />Experience</span></div>
+              <div class="rose-about-stat"><span class="rose-about-stat-icon" aria-hidden="true">▣</span><strong>50+</strong><span>Projects<br />Completed</span></div>
+              <div class="rose-about-stat"><span class="rose-about-stat-icon" aria-hidden="true">☆</span><strong>2</strong><span>Brands<br />Worked With</span></div>
+            </div>
           </div>
-          <div class="reveal">
-            <p>
-              I'm a multidisciplinary creative designer based in the
-              Philippines, creating bold visuals and thoughtful experiences at
-              the intersection of design, marketing and technology.
-            </p>
-            <p>
-              From brand storytelling and social campaigns to apparel graphics
-              and digital interfaces, I believe great design should look
-              compelling and communicate clearly.
-            </p>
-            <a
-              aria-label="Download Rose Estrada CV as PDF"
-              class="btn primary cv-download-btn"
-              download="Rose-Estrada-CV.pdf"
-              href="assets/Rose-Estrada-CV.pdf"
-              type="application/pdf"
-              ><span>Download CV</span><span aria-hidden="true">↓</span></a
-            >
+          <div class="rose-about-visual reveal" aria-label="Rose Estrada and her creative design toolkit">
+            <div class="rose-about-gridlines" aria-hidden="true"></div>
+            <div class="rose-about-blob" aria-hidden="true"></div>
+            <div class="rose-about-screen rose-about-screen-main" aria-hidden="true"><div class="rose-about-screen-top"><i></i><i></i><i></i><span>DESIGN STUDIO</span></div><div class="rose-about-screen-canvas"><svg viewBox="0 0 220 150" fill="none" aria-hidden="true"><rect x="19" y="14" width="182" height="122" rx="9" stroke="#7caeff" stroke-width="2" stroke-dasharray="6 6"/><circle cx="158" cy="46" r="14" fill="#80b6ff"/><path d="M34 114 84 64l37 36 25-24 40 38" stroke="#3778d9" stroke-width="5" stroke-linejoin="round"/></svg></div><div class="rose-about-screen-tools">↖<br />✎<br />▢<br />T</div></div>
+            <div class="rose-about-screen rose-about-screen-wire" aria-hidden="true"><div class="rose-about-screen-top"><i></i><i></i><i></i></div><div class="rose-about-wire-row"><b></b><span></span></div><div class="rose-about-wire-row"><b></b><span></span></div><div class="rose-about-wire-row"><b></b><span></span></div></div>
+            <div class="rose-about-screen rose-about-screen-ux" aria-hidden="true"><strong>UI/UX</strong><div class="rose-about-ux-image"></div><span></span><span></span><span></span></div>
+            <div class="rose-about-badge badge-ps" aria-label="Adobe Photoshop">Ps</div>
+            <div class="rose-about-badge badge-ai" aria-label="Adobe Illustrator">Ai</div>
+            <div class="rose-about-badge badge-dn" aria-label="Adobe Dimension">Dn</div>
+            <div class="rose-about-badge badge-figma" aria-label="Figma"><span class="rose-figma-symbol"><i></i><i></i><i></i><i></i><i></i></span></div>
+            <div class="rose-about-badge badge-framer" aria-label="Framer"><svg viewBox="0 0 24 36" aria-hidden="true"><path fill="currentColor" d="M0 0h24v12H12l12 12H12v12L0 24V12h12z"/></svg></div>
+            <div class="rose-about-badge badge-wordpress" aria-label="WordPress">W</div>
+            <svg class="rose-about-pen-tool" viewBox="0 0 200 190" fill="none" aria-hidden="true"><path d="M22 155C42 104 69 146 93 100S149 75 173 26" stroke="#2165ca" stroke-width="3" stroke-dasharray="6 8"/><path d="M22 155 92 101 173 26" stroke="#75a6ed" stroke-width="1.5"/><circle cx="22" cy="155" r="7" fill="#fff" stroke="#2165ca" stroke-width="3"/><circle cx="92" cy="101" r="7" fill="#fff" stroke="#2165ca" stroke-width="3"/><circle cx="173" cy="26" r="7" fill="#fff" stroke="#2165ca" stroke-width="3"/><path d="m127 47 30 15-15 31-15-46Z" fill="#0d2d58" stroke="#fff" stroke-width="3"/></svg>
+            <img class="rose-about-portrait" src="assets/rose-portrait.png" alt="Portrait of Rose Estrada, creative designer" loading="lazy" />
           </div>
         </div>
       </section>
-      <section class="section shell" id="services">
+      <section class="section shell motion-section" id="services">
         <div class="section-top reveal">
           <div>
-            <p class="eyebrow">03 / WHAT I DO</p>
-            <h2>Creative <em>Capabilities.</em></h2>
+            <p class="eyebrow">04 / SERVICES</p>
+            <h2>Creative <em>Services.</em></h2>
           </div>
           <p>
-            Thoughtful creative solutions from first concept to final execution.
+            Design solutions that blend creativity, technology, and strategy to help brands grow and connect with their audience.
           </p>
         </div>
         <div class="services-grid">
-          <article class="service reveal">
-            <span>01 ↗</span>
-            <h3>Brand &amp; Identity</h3>
-            <p>
-              Identity systems, art direction, brand storytelling and memorable
-              visual languages.
-            </p>
+          <article class="service reveal" tabindex="0">
+            <span class="service-number">01</span>
+            <div class="service-copy"><h3>Brand Identity</h3><p>Building memorable visual identities through logos, typography, and cohesive brand systems.</p></div>
+            <span class="service-arrow" aria-hidden="true">↗</span>
           </article>
-          <article class="service reveal">
-            <span>02 ↗</span>
-            <h3>Marketing &amp; Campaigns</h3>
-            <p>
-              Social media, advertising, promotional visuals and campaign
-              concepts.
-            </p>
+          <article class="service reveal" tabindex="0">
+            <span class="service-number">02</span>
+            <div class="service-copy"><h3>Graphic Design</h3><p>Creating impactful visuals for campaigns, social media, advertising, and print.</p></div>
+            <span class="service-arrow" aria-hidden="true">↗</span>
           </article>
-          <article class="service reveal">
-            <span>03 ↗</span>
-            <h3>Digital &amp; Motion</h3>
-            <p>
-              Digital interfaces, creative web experiences and motion-led visual
-              communication.
-            </p>
+          <article class="service reveal" tabindex="0">
+            <span class="service-number">03</span>
+            <div class="service-copy"><h3>Web & UI/UX</h3><p>Designing intuitive digital experiences, responsive websites, and user-friendly interfaces.</p></div>
+            <span class="service-arrow" aria-hidden="true">↗</span>
           </article>
-          <article class="service reveal">
-            <span>04 ↗</span>
-            <h3>Apparel &amp; Print</h3>
-            <p>
-              Expressive T-shirt graphics, merchandise, packaging and
-              print-ready design.
-            </p>
+          <article class="service reveal" tabindex="0">
+            <span class="service-number">04</span>
+            <div class="service-copy"><h3>Apparel & Packaging</h3><p>Creating thoughtful merchandise, T-shirt graphics, and packaging concepts.</p></div>
+            <span class="service-arrow" aria-hidden="true">↗</span>
           </article>
         </div>
       </section>
-      <section class="section tools-band" id="tools">
+      <section class="section tools-band motion-section" id="tools">
         <div class="shell">
           <div class="section-top reveal">
             <div>
-              <p class="eyebrow">04 / CREATIVE TOOLKIT</p>
-              <h2>Tools of <em>the Trade.</em></h2>
+              <p class="eyebrow">05 / CREATIVE TOOLKIT</p>
+              <h2>Creative <em>Toolkit.</em></h2>
             </div>
-            <div class="tool-buttons">
-              <button aria-label="Previous tools" id="toolsPrev">←</button
-              ><button aria-label="Next tools" id="toolsNext">→</button>
-            </div>
+            <p class="section-side-note">The tools I use to design, create, and bring ideas to life.</p>
+
           </div>
           <div class="tools-track" id="toolsTrack"></div>
         </div>
       </section>
-      <section class="section shell process">
+      <section class="section shell process motion-section">
         <div class="section-top reveal">
           <div>
-            <p class="eyebrow">05 / MY APPROACH</p>
+            <p class="eyebrow">06 / MY APPROACH</p>
             <h2>Ideas into <em>Impact.</em></h2>
           </div>
+          <p>A creative and strategic process that transforms ideas into meaningful visual solutions.</p>
         </div>
         <div class="steps">
           <div class="reveal">
+            <div class="step-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="23" cy="23" r="13"/><path d="m33 33 10 10"/></svg></div>
             <span>01</span>
             <h3>Discover</h3>
             <p>Understand the audience, brief and objectives.</p>
           </div>
           <div class="reveal">
+            <div class="step-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 32c-4-3-6-7-6-12a13 13 0 0 1 26 0c0 5-2 9-6 12v4H17zM19 41h10M21 45h6"/></svg></div>
             <span>02</span>
             <h3>Explore</h3>
             <p>Find ideas, directions and possibilities.</p>
           </div>
           <div class="reveal">
+            <div class="step-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 38 24 13 39 38M12 38h24M24 13v29M7 11h5M36 11h5"/><circle cx="24" cy="13" r="3"/></svg></div>
             <span>03</span>
             <h3>Create</h3>
             <p>Turn concepts into expressive visual systems.</p>
           </div>
           <div class="reveal">
+            <div class="step-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m24 6 18 10-18 10L6 16 24 6Zm-18 18 18 10 18-10M6 32l18 10 18-10"/></svg></div>
             <span>04</span>
             <h3>Refine</h3>
             <p>Polish every detail and deliver with care.</p>
@@ -356,11 +326,7 @@
         </div>
       </section>
     </main>
-    <footer class="footer shell">
-      <a class="logo" href="#home">ROSE<span>®</span></a
-      ><span>© <span id="year"></span> ROSE ESTRADA</span
-      ><a href="#home">BACK TO TOP ↑</a>
-    </footer>
+    <footer class="footer shell"><a class="footer-wordmark" href="#home" aria-label="ROSE — Back to top">ROSE</a><span class="footer-copyright">© <span id="year"></span> ROSE ESTRADA</span><a class="footer-back-top" href="#home">BACK TO TOP <span aria-hidden="true">↑</span></a></footer>
     <dialog
       aria-label="Project details"
       class="project-dialog"
