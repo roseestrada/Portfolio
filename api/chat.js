@@ -42,6 +42,72 @@ RULES:
 `;
 
 
+
+const MODELS = [
+  "gemini-3.8-flash",
+  "gemini-3.5-flash-lite"
+];
+
+const sleep = (ms) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+async function askGemini(model, apiKey, contents) {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{ text: SYSTEM }]
+        },
+        contents,
+        generationConfig: {
+          maxOutputTokens: 1000
+        }
+      }),
+      signal: AbortSignal.timeout(12000)
+    }
+  );
+
+  if (!response.ok) {
+    const details = await response.text();
+
+    console.error("Gemini request failed", {
+      model,
+      status: response.status,
+      details: details.slice(0, 1000)
+    });
+
+    const error = new Error("Gemini request failed");
+    error.status = response.status;
+    throw error;
+  }
+
+  const data = await response.json();
+
+  const reply = (
+    data.candidates?.[0]?.content?.parts || []
+  )
+    .filter((part) => typeof part.text === "string")
+    .map((part) => part.text)
+    .join("")
+    .trim();
+
+  if (!reply) {
+    console.error("Gemini returned no text", {
+      model,
+      finishReason: data.candidates?.[0]?.finishReason
+    });
+    throw new Error("Empty Gemini response");
+  }
+
+  return reply;
+}
+
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
@@ -55,6 +121,7 @@ export default async function handler(req, res) {
 
   if (!apiKey) {
     console.error("Missing GEMINI_API_KEY");
+
     return res.status(503).json({
       error: "Chat is not configured"
     });
@@ -80,73 +147,63 @@ export default async function handler(req, res) {
     });
   }
 
-  try {
-    const contents = messages.map((m) => ({
-      role: m.role,
-      parts: [{ text: m.text }]
-    }));
+  const contents = messages.map((m) => ({
+    role: m.role,
+    parts: [{ text: m.text }]
+  }));
 
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: SYSTEM }]
-          },
-          contents,
-          generationConfig: {
-            maxOutputTokens: 1000
-          }
-        }),
-        signal: AbortSignal.timeout(25000)
+  let lastError;
+
+  for (const model of MODELS) {
+    // Retry each model once for temporary failures.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const reply = await askGemini(
+          model,
+          apiKey,
+          contents
+        );
+
+        return res.status(200).json({ reply });
+
+      } catch (error) {
+        lastError = error;
+
+        console.error("Chat attempt failed", {
+          model,
+          attempt,
+          status: error.status || "network/timeout"
+        });
+
+        // Authentication, invalid requests and quota
+        // errors should not be retried.
+        if ([400, 401, 403, 429].includes(error.status)) {
+          return res.status(502).json({
+            error: "Assistant temporarily unavailable"
+          });
+        }
+
+        // Only retry transient failures.
+        const retryable =
+          !error.status ||
+          [500, 502, 503, 504].includes(error.status);
+
+        if (!retryable) {
+          break;
+        }
+
+        if (attempt === 1) {
+          await sleep(500);
+        }
       }
-    );
-
-    if (!response.ok) {
-      const details = await response.text();
-
-      console.error("Gemini API failed", {
-        status: response.status,
-        details: details.slice(0, 1500)
-      });
-
-      return res.status(502).json({
-        error: "Assistant temporarily unavailable"
-      });
     }
-
-    const data = await response.json();
-
-    const reply = (
-      data.candidates?.[0]?.content?.parts || []
-    )
-      .filter((part) => typeof part.text === "string")
-      .map((part) => part.text)
-      .join("")
-      .trim();
-
-    if (!reply) {
-      console.error("Gemini returned no text", {
-        finishReason: data.candidates?.[0]?.finishReason
-      });
-
-      return res.status(502).json({
-        error: "No response generated"
-      });
-    }
-
-    return res.status(200).json({ reply });
-
-  } catch (error) {
-    console.error("Chat server error:", error.message);
-
-    return res.status(502).json({
-      error: "Assistant temporarily unavailable"
-    });
   }
+
+  console.error("All Gemini attempts failed", {
+    status: lastError?.status || "unknown"
+  });
+
+  return res.status(502).json({
+    error: "Assistant temporarily unavailable"
+  });
 }
