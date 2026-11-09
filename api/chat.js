@@ -41,6 +41,7 @@ RULES:
 - Keep responses clear and easy to understand.
 `;
 
+
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
@@ -53,10 +54,9 @@ export default async function handler(req, res) {
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    console.error("GEMINI_API_KEY is missing");
-
+    console.error("Missing GEMINI_API_KEY");
     return res.status(503).json({
-      error: "Chat is not configured yet"
+      error: "Chat is not configured"
     });
   }
 
@@ -68,8 +68,10 @@ export default async function handler(req, res) {
     messages.length > 12 ||
     messages.some(
       (m) =>
+        !m ||
         !["user", "model"].includes(m.role) ||
         typeof m.text !== "string" ||
+        !m.text.trim() ||
         m.text.length > 600
     )
   ) {
@@ -84,7 +86,7 @@ export default async function handler(req, res) {
       parts: [{ text: m.text }]
     }));
 
-    const upstream = await fetch(
+    const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
       {
         method: "POST",
@@ -98,41 +100,47 @@ export default async function handler(req, res) {
           },
           contents,
           generationConfig: {
-            maxOutputTokens: 500,
-            temperature: 0.5
+            maxOutputTokens: 1000
           }
-        })
+        }),
+        signal: AbortSignal.timeout(25000)
       }
     );
 
-    if (!upstream.ok) {
-      const details = await upstream.text();
+    if (!response.ok) {
+      const details = await response.text();
 
-      console.error(
-        "Gemini API error:",
-        upstream.status,
-        details
-      );
+      console.error("Gemini API failed", {
+        status: response.status,
+        details: details.slice(0, 1500)
+      });
 
       return res.status(502).json({
         error: "Assistant temporarily unavailable"
       });
     }
 
-    const data = await upstream.json();
+    const data = await response.json();
 
     const reply = (
       data.candidates?.[0]?.content?.parts || []
     )
-      .map((part) => part.text || "")
+      .filter((part) => typeof part.text === "string")
+      .map((part) => part.text)
       .join("")
       .trim();
 
-    return res.status(200).json({
-      reply:
-        reply ||
-        "Sorry, I couldn't generate a response. Please try again."
-    });
+    if (!reply) {
+      console.error("Gemini returned no text", {
+        finishReason: data.candidates?.[0]?.finishReason
+      });
+
+      return res.status(502).json({
+        error: "No response generated"
+      });
+    }
+
+    return res.status(200).json({ reply });
 
   } catch (error) {
     console.error("Chat server error:", error.message);
