@@ -999,7 +999,7 @@ html[data-theme=dark] .nav-links a.is-active {background:linear-gradient(120deg,
 .rose-about-screen-ux{right:-5%;bottom:12%;width:34%;height:170px;padding:13px;transform:rotate(9deg)}.rose-about-screen-ux strong{color:#16345e;font-size:16px}.rose-about-ux-image{height:75px;margin:9px 0;background:linear-gradient(140deg,#b6d7ff 50%,#8cb8f2 50%);border-radius:8px}.rose-about-screen-ux>span{display:block;width:75%;height:5px;border-radius:9px;background:#b3cff4;margin:6px 0}
 .rose-about-badge{position:absolute;z-index:5;width:65px;height:65px;border:4px solid #fff;border-radius:15px;display:grid;place-items:center;font:800 26px Manrope,sans-serif;box-shadow:0 14px 30px #153e7840;animation:rose-about-float 5s ease-in-out infinite}
 .badge-ps{top:7%;left:13%;background:#001d34;color:#31a8ff;transform:rotate(-13deg)}.badge-ai{top:23%;left:0%;background:#330000;color:#ff9a00;animation-delay:-1s}.badge-dn{top:3%;right:19%;background:#302050;color:#c9a7ff;animation-delay:-2s}
-.badge-figma{top:42%;left:-5%;background:#172e54;animation-delay:-3s}.badge-framer{bottom:17%;right:0%;background:#fff;color:#1465e9;animation-delay:-2.5s}.badge-wordpress{top:41%;right:-8%;background:#fff;color:#21759b;border-radius:50%;font-family:Georgia,serif;font-size:38px;animation-delay:-1.5s}
+.badge-figma{top:42%;left:-5%;background:#172e54;animation-delay:-3s}.badge-framer{bottom:17%;right:0%;background:#fff;color:#1465e9;border: 5px solid #1465e9 !important;animation-delay:-2.5s}.badge-wordpress{top:41%;right:-8%;background:#fff;color:#21759b;border-radius:50%;font-family:Georgia,serif;font-size:38px;animation-delay:-1.5s}
 .rose-about-badge svg{width:30px;height:38px}.rose-figma-symbol{display:grid;grid-template-columns:repeat(2,13px);grid-template-rows:repeat(3,13px)}.rose-figma-symbol i{display:block}.rose-figma-symbol i:nth-child(1){background:#f24e1e;border-radius:7px 0 0 7px}.rose-figma-symbol i:nth-child(2){background:#ff7262;border-radius:0 7px 7px 0}.rose-figma-symbol i:nth-child(3){background:#a259ff;border-radius:7px 0 0 7px}.rose-figma-symbol i:nth-child(4){background:#1abcfe;border-radius:50%}.rose-figma-symbol i:nth-child(5){background:#0acf83;border-radius:7px 0 7px 7px}
 .rose-about-pen-tool{position:absolute;z-index:2;right:-7%;top:38%;width:180px;opacity:.95;pointer-events:none}
 @keyframes rose-about-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
@@ -1093,3 +1093,115 @@ html[data-theme=dark] .nav .wordmark .nav-logo-dark{display:block;}
 .nav .wordmark.logo-missing .nav-logo{display:none!important;}
 .nav .wordmark.logo-missing .nav-logo-fallback{display:inline;}
 @media(max-width:850px){.header{left:0!important;right:0!important;transform:none!important;top:0!important;width:100%!important;border-radius:0!important}.nav .wordmark .nav-logo{height:37px;max-width:125px}.nav-links a.is-active{background:var(--soft)!important;color:var(--accent)!important}}
+
+
+/* Mobile layout repairs — preserve all existing SEO/AEO markup and desktop styling. */
+html,body{max-width:100%;overflow-x:clip}
+.shell{min-width:0}
+#work .section-top > div{min-width:0}
+#work .section-top h2{overflow-wrap:normal}
+@media(max-width:850px){
+  #work .section-top{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:16px!important;margin-bottom:30px!important}
+  #work .section-top > div{width:100%!important;min-width:0!important}
+  #work .section-top .eyebrow{margin-bottom:12px!important}
+  #work .section-top h2{position:static!important;margin:0!important;line-height:1.12!important;font-size:clamp(40px,9vw,68px)!important;letter-spacing:-.065em!important}
+  #work .section-top > p{position:static!important;max-width:100%!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;line-height:1.65!important;font-size:clamp(14px,3.5vw,16px)!important;transform:none!important}
+  .hero-mobile-previews{display:flex!important;overflow-x:auto!important;overflow-y:hidden!important;gap:12px!important;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x;pointer-events:auto!important;padding:8px 0 14px!important;margin-top:35px!important}
+  .hero-mobile-previews::-webkit-scrollbar{display:none}
+  .hero-preview-card{display:block;flex:0 0 clamp(120px,29vw,200px);width:clamp(120px,29vw,200px);padding:0;border:0;background:none;cursor:pointer;scroll-snap-align:start;border-radius:13px;overflow:hidden}
+  .hero-preview-card img,.hero-mobile-previews .hero-preview-card img{display:block;width:100%!important;height:auto!important;aspect-ratio:3/4;object-fit:cover;border-radius:13px}
+  .hero-preview-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+}
+@media(max-width:650px){
+  .shell{width:calc(100% - 28px)!important;max-width:100%!important;margin-inline:auto!important}
+  .hero-inner,.section-top,.project-grid,.filters{min-width:0;max-width:100%}
+  .hero{width:100%;max-width:100%;}
+  .hero-inner{padding-inline:0!important}
+  .hero h1{font-size:clamp(44px,11.5vw,72px)!important;overflow-wrap:normal}
+  .hero-desc{max-width:100%;padding-inline:3px}
+  #work .filters{display:flex;flex-wrap:wrap;gap:9px}
+  #work .filter{max-width:100%;white-space:normal;text-align:center}
+  #work .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .project-card,.project-art{min-width:0}
+}
+@media(max-width:370px){#work .project-grid{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){.hero-mobile-previews{scroll-behavior:auto!important}}
+
+
+
+/* Remove blue vertical lines from section descriptions on mobile */
+@media (max-width: 650px) {
+  .section-top > p,
+  .section-top .section-side-note {
+    border-left: none !important;
+    border-right: none !important;
+    padding-left: 0 !important;
+  }
+
+  .section-top > p::before,
+  .section-top > p::after,
+  .section-top .section-side-note::before,
+  .section-top .section-side-note::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+
+/* Creative Toolkit - consistent square logo containers */
+.tool-logo {
+  width: 64px;
+  height: 64px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+
+/* WordPress logo - square style */
+.tool-logo[src*="WordPress_blue_logo"] {
+  width: 64px !important;
+  height: 64px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  background: #21759b !important;
+  border: 4px solid #ffffff !important;
+  border-radius: 16px !important;
+  object-fit: contain !important;
+}
+
+
+
+
+/* About portrait: WordPress badge matches the other rounded-square app icons. */
+.rose-about-badge.badge-wordpress {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: #ffffff !important;
+  border: 5px solid #21759b !important;
+  border-radius: 19px !important;
+  padding: 7px;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 0;
+}
+.rose-about-badge.badge-wordpress .rose-wordpress-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0 !important;
+}
+@media (max-width: 650px) {
+  .rose-about-badge.badge-wordpress {
+    width: 56px;
+    height: 56px;
+    border-width: 4px !important;
+    border-radius: 16px !important;
+    padding: 5px;
+  }
+}
