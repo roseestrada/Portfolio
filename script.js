@@ -572,11 +572,13 @@ function toolItem([slug, name, color, fallback]) {
   logo.loading = 'lazy';
 
   
-    logo.src = slug === 'wordpress'
-    ? 'assets/tool-logos/WordPress_blue_logo.svg.webp'
+
+  logo.src = slug === 'wordpress'
+    ? 'https://cdn.simpleicons.org/wordpress/21759B'
     : slug === 'adobedimension'
       ? 'assets/tool-logos/adobe-dimension.svg'
       : `https://cdn.simpleicons.org/${slug}/${color}`;
+
 
   
   logo.onerror = () => {
