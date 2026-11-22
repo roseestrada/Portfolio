@@ -4292,3 +4292,40 @@ body {
     padding: 5px;
   }
 }
+
+/* Client inquiry — responsive contact redesign */
+.contact-section {background:#10294b;color:#fff;text-align:left;padding:115px 0;position:relative;overflow:hidden}
+.inquiry-layout {display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,7vw,120px);align-items:center}
+.inquiry-intro {position:relative;align-self:stretch;padding-top:35px}
+.inquiry-intro .eyebrow{color:#a9c8ff}
+.inquiry-intro h2{font-size:clamp(52px,6vw,94px);line-height:1.07;margin:26px 0;letter-spacing:-.075em}
+.inquiry-intro h2 em{color:#8fb7ff}
+.inquiry-intro>p:not(.eyebrow){font-size:16px;max-width:440px;color:#cad8eb}
+.inquiry-contact-details{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:60px;font-size:14px}
+.inquiry-detail-label{font-size:10px;letter-spacing:.17em;font-weight:800;color:#94b3dc;margin-top:16px}
+.inquiry-contact-details a{border-bottom:1px solid #829bbd;padding-bottom:6px}
+.inquiry-decoration{display:block;font-size:125px;color:#35547d;line-height:1;margin-top:45px}
+.inquiry-card{background:var(--surface);color:var(--text);padding:clamp(24px,3.4vw,50px);border-radius:20px;box-shadow:0 30px 90px #030d2240;text-align:left}
+.inquiry-card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--muted)}
+.inquiry-availability{color:#269779;white-space:nowrap}
+.inquiry-availability i{display:inline-block;width:7px;height:7px;background:#31b58d;border-radius:50%;margin-right:6px}
+.inquiry-card h3{font-size:clamp(25px,3vw,36px);letter-spacing:-.055em;margin:26px 0 8px}
+.inquiry-card-subtitle{font-size:13px;color:var(--muted);margin-bottom:27px}
+.inquiry-two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.inquiry-field{display:flex;flex-direction:column;gap:9px;margin-bottom:19px}
+.inquiry-field label{font-size:12px;font-weight:800}
+.inquiry-field label span{color:var(--accent)}
+.inquiry-field input,.inquiry-field select,.inquiry-field textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text);padding:14px 15px;font:500 13px 'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.inquiry-field textarea{resize:vertical;min-height:130px}
+.inquiry-field input:focus,.inquiry-field select:focus,.inquiry-field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
+.inquiry-field input::placeholder,.inquiry-field textarea::placeholder{color:var(--muted);opacity:.8}
+.inquiry-hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.inquiry-privacy{font-size:11px;color:var(--muted);line-height:1.6;margin:0 0 17px}
+.inquiry-submit{width:100%;border:0;border-radius:9px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;font-weight:800;font-size:13px;transition:transform .2s,filter .2s}
+.inquiry-submit:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.inquiry-submit:disabled{opacity:.65;cursor:wait}
+.inquiry-status{margin:12px 0 0;font-size:13px;min-height:1.2em;color:var(--text)}
+.inquiry-status[data-state="error"]{color:#d34d5d}
+.inquiry-status[data-state="success"]{color:#249c7a}
+@media(max-width:900px){.inquiry-layout{grid-template-columns:1fr;gap:35px}.inquiry-intro{padding-top:0}.inquiry-contact-details{margin-top:25px}.inquiry-decoration{display:none}}
+@media(max-width:560px){.contact-section{padding:75px 0}.inquiry-two-cols{grid-template-columns:1fr;gap:0}.inquiry-card{padding:25px 20px}.inquiry-card-top{font-size:9px}}

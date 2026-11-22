@@ -321,21 +321,36 @@
         </div>
       </section>
       <section class="contact-section" id="contact">
-        <div class="shell contact-inner reveal">
-          <p class="eyebrow">HAVE A PROJECT IN MIND?</p>
-          <h2>Let's create<br /><em>something great.</em></h2>
-          <p>
-            Open to exciting projects, meaningful collaborations and new ideas.
-          </p>
-          <a
-            class="btn contact-btn"
-            href="mailto:ef.rosemarie@gmail.com?subject=Portfolio%20Inquiry"
-            >Start a conversation ↗</a
-          ><small
-            ><a href="mailto:ef.rosemarie@gmail.com"
-              >ef.rosemarie@gmail.com</a
-            ></small
-          >
+        <div class="shell inquiry-layout">
+          <div class="inquiry-intro reveal">
+            <p class="eyebrow">07 / LET'S WORK TOGETHER</p>
+            <h2>Have a project<br /><em>in mind?</em></h2>
+            <p>Tell me about your idea, your brand, or the creative challenge you're working on. I'd love to hear about it.</p>
+            <div class="inquiry-contact-details">
+              <span class="inquiry-detail-label">PREFER EMAIL?</span>
+              <a href="mailto:ef.rosemarie@gmail.com">ef.rosemarie@gmail.com ↗</a>
+              <span class="inquiry-detail-label">BASED IN</span>
+              <span>Philippines · Available for remote projects</span>
+            </div>
+            <span class="inquiry-decoration" aria-hidden="true">✳</span>
+          </div>
+          <div class="inquiry-card reveal">
+            <div class="inquiry-card-top"><span>NEW PROJECT INQUIRY</span><span class="inquiry-availability"><i></i> OPEN FOR PROJECTS</span></div>
+            <h3>Let's make it happen.</h3>
+            <p class="inquiry-card-subtitle">Share a few details and I'll get back to you by email.</p>
+            <form id="inquiryForm" action="/api/inquiry" method="post">
+              <div class="inquiry-two-cols">
+                <div class="inquiry-field"><label for="inquiryName">Your name <span>*</span></label><input id="inquiryName" name="name" autocomplete="name" placeholder="Your full name" maxlength="100" required /></div>
+                <div class="inquiry-field"><label for="inquiryEmail">Email address <span>*</span></label><input id="inquiryEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" maxlength="254" required /></div>
+              </div>
+              <div class="inquiry-field"><label for="inquiryService">What do you need? <span>*</span></label><select id="inquiryService" name="service" required><option value="" disabled selected>Select a service</option><option>Brand Identity</option><option>Graphic Design</option><option>Social Media & Advertising</option><option>Web & UI/UX Design</option><option>Apparel & Packaging</option><option>Other / Not sure yet</option></select></div>
+              <div class="inquiry-field"><label for="inquiryMessage">Tell me about your project <span>*</span></label><textarea id="inquiryMessage" name="message" rows="5" minlength="10" maxlength="5000" placeholder="Your idea, goals, timeline, or anything you'd like me to know..." required></textarea></div>
+              <div class="inquiry-hp" aria-hidden="true"><label for="inquiryWebsite">Leave this field empty</label><input id="inquiryWebsite" name="website" tabindex="-1" autocomplete="off" /></div>
+              <p class="inquiry-privacy">By submitting, you agree that your contact details and project information will be used to respond to your inquiry.</p>
+              <button class="inquiry-submit" id="inquirySubmit" type="submit"><span>Send inquiry</span><span aria-hidden="true">↗</span></button>
+              <p id="inquiryStatus" class="inquiry-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
         </div>
       </section>
     </main>

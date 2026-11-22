@@ -872,3 +872,35 @@ chatForm.addEventListener('submit', async e => {
     }
   }
 })();
+
+// Secure client inquiry submission (server-side webhook proxy)
+(() => {
+  const form = document.getElementById('inquiryForm');
+  if (!form) return;
+  const submit = document.getElementById('inquirySubmit');
+  const status = document.getElementById('inquiryStatus');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    submit.disabled = true;
+    status.dataset.state = '';
+    status.textContent = 'Sending your inquiry…';
+    try {
+      const values = Object.fromEntries(new FormData(form).entries());
+      const response = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      status.dataset.state = 'success';
+      status.textContent = 'Thank you! Your inquiry has been sent. I’ll get back to you by email.';
+      form.reset();
+    } catch (_) {
+      status.dataset.state = 'error';
+      status.textContent = 'Unable to send right now. Please email ef.rosemarie@gmail.com directly.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+})();
